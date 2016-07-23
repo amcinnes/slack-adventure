@@ -1,0 +1,16 @@
+version: '2'
+services:
+  adventure:
+    build:
+      context: .
+      dockerfile: Dockerfile.adventure
+    command: ["socat", "TCP-LISTEN:3000,fork", "EXEC:/usr/games/adventure,pty"]
+  slackbot:
+    build:
+      context: .
+      dockerfile: Dockerfile.slackbot
+    command: ["python", "main.py"]
+    environment:
+    - SLACK_TOKEN
+    - CHANNEL_ID
+    restart: unless-stopped
