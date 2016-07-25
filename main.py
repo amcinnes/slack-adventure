@@ -64,8 +64,8 @@ logging.info('Starting main loop')
 while True:
     time.sleep(0.5)
     for m in sc.rtm_read():
-        logging.debug(m)
-        if m.get('type', None) == 'message' and m['text'].startswith('!') and m['channel'] == channel:
+        logging.info('Received from Slack: %s', repr(m))
+        if m.get('type', None) == 'message' and m.get('text', '').startswith('!') and m['channel'] == channel:
             if m['text'] == '!bounce':
                 send_to_slack(sc, channel, 'Received !bounce; exiting')
                 logging.info('Received !bounce; exiting')
